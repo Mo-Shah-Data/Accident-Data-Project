@@ -35,3 +35,7 @@ head(Accidents0513)
 
 #Create data.frame with columns required
 
+#Date time data type is follows eg. date <- as.POSIXct("2012-06-28 17:42")
+
+
+
