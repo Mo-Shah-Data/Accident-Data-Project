@@ -19,5 +19,19 @@ mapImageData3 <- get_map(location = "UK",
 )
                          
 
-ggmap(mapImageData3, 
-      extent = "auto")
+
+
+###Start of Project Work
+
+Accidents0513 <- read.csv("~/Desktop/AccidentData/Accidents0513.csv")
+
+
+#Remove all unwanted columns
+
+#First check what columsn are in the dataset
+
+head(Accidents0513)
+
+
+#Create data.frame with columns required
+
