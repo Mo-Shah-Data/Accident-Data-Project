@@ -128,34 +128,35 @@ AccidentsTopTen
 TopThousandRows <-Accidents0513[1:1000, ]
 TopThousandRows
 
-#TopThousandRows now shows the top thousand rows and we polt these to test
+#TopThousandRows now shows the top thousand rows and we plot these to test
 
-
-AccidentsTopThousand <- leaflet() %>%
-  addTiles() %>%  # Add default OpenStreetMap map tiles
+AccidentsTopThousand <- leaflet() %>% 
+  addTiles() %>% 
+  setView(-0.191170, 51.48910, zoom = 13) %>% 
   addMarkers(lng=TopThousandRows$Longitude, lat=TopThousandRows$Latitude, popup="Accidents")
-# Print the map
 AccidentsTopThousand
 
-#To Write about - We stuck to th default OpenStreetMap base tiles and map as we need to make the process as simple as possible and have the best end result for people trying to replicate this.
+
+#To Write about - We stuck to the default OpenStreetMap base tiles and map as we need to make the process as simple as possible and have the best end result for people trying to replicate this.
 
 #For Marker Clusters the following URL needs to be used to implement this and develop it.
 #https://github.com/Leaflet/Leaflet.markercluster
 
-AccidentsTopThousand <- leaflet() %>% 
-  addTiles() %>% 
-  addMarkers(lng=TopThousandRows$Longitude, lat=TopThousandRows$Latitude)
-AccidentsTopThousand
-
-##
-
-AccidentsTopThousand % 
+AccidentsClustered <- leaflet() %>% 
 addTiles() %>% 
-  addMarkers(lng=TopThousandRows$Longitude, lat=TopThousandRows$Latitude)
-AccidentsTopThousand
+  setView(-0.191170, 51.48910, zoom = 13) %>%
+  addCircleMarkers(lng=TopThousandRows$Longitude, lat=TopThousandRows$Latitude, radius = 5,
+                   clusterOptions = markerClusterOptions())
+AccidentsClustered
 
-AccidentsTopThousand % 
-addTiles() %>% 
-addCircleMarkers(data = data, lng = ~ X, lat = ~ Y, radius = 5),
-                   #,color = ~ ifelse(Category == 'BRIBERY', 'red', 'blue'),
-                   clusterOptions = markerClusterOptions()
+##In the above we tested the top 1000 rows and now we want to plot for all UK
+
+
+
+mean(TopThousandRows$Longitude)
+mean(TopThousandRows$Latitude)
+is.na()
+!is.na(TopThousandRows$Longitude)
+library(leaflet)
+library(magrittr)
+
