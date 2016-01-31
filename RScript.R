@@ -136,6 +136,14 @@ AccidentsTopThousand <- leaflet() %>%
   addMarkers(lng=TopThousandRows$Longitude, lat=TopThousandRows$Latitude, popup="Accidents")
 AccidentsTopThousand
 
+#Test to plot all
+AllAccidents0513 <- leaflet() %>% 
+  addTiles() %>% 
+  setView(-0.191170, 51.48910, zoom = 13) %>% 
+  addMarkers(lng=Accidents0513$Longitude, lat=Accidents0513$Latitude, popup="Accidents")
+AllAccidents0513
+
+
 
 #To Write about - We stuck to the default OpenStreetMap base tiles and map as we need to make the process as simple as possible and have the best end result for people trying to replicate this.
 
@@ -149,9 +157,16 @@ addTiles() %>%
                    clusterOptions = markerClusterOptions())
 AccidentsClustered
 
-##In the above we tested the top 1000 rows and now we want to plot for all UK
+##In the above we tested the top 1000 rows and now we want to plot for all UK from 2005 to 2013
 
+Accidents0513
 
+AllAccidentsClustered <- leaflet(na.omit(Accidents0513)) %>% 
+  addTiles() %>% 
+  setView(-0.191170, 51.48910, zoom = 10) %>%
+  addCircleMarkers(lng=Accidents0513$Longitude, lat=Accidents0513$Latitude,
+clusterOptions = markerClusterOptions())
+AllAccidentsClustered
 
 mean(TopThousandRows$Longitude)
 mean(TopThousandRows$Latitude)
