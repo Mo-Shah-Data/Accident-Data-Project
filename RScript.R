@@ -168,6 +168,8 @@ AllAccidentsClustered <- leaflet(na.omit(Accidents0513)) %>%
 clusterOptions = markerClusterOptions())
 AllAccidentsClustered
 
+
+
 mean(TopThousandRows$Longitude)
 mean(TopThousandRows$Latitude)
 is.na()
