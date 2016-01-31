@@ -104,6 +104,7 @@ lnd <- readOGR(dsn = "data", layer = "london_sport")
 
 
 library(leaflet)
+library(magrittr)
 leaflet()
 
 #Create  a subset of the data for the first ten results
@@ -136,6 +137,25 @@ AccidentsTopThousand <- leaflet() %>%
 # Print the map
 AccidentsTopThousand
 
+#To Write about - We stuck to th default OpenStreetMap base tiles and map as we need to make the process as simple as possible and have the best end result for people trying to replicate this.
 
+#For Marker Clusters the following URL needs to be used to implement this and develop it.
+#https://github.com/Leaflet/Leaflet.markercluster
 
+AccidentsTopThousand <- leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(lng=TopThousandRows$Longitude, lat=TopThousandRows$Latitude)
+AccidentsTopThousand
 
+##
+
+AccidentsTopThousand % 
+addTiles() %>% 
+  addMarkers(lng=TopThousandRows$Longitude, lat=TopThousandRows$Latitude)
+AccidentsTopThousand
+
+AccidentsTopThousand % 
+addTiles() %>% 
+addCircleMarkers(data = data, lng = ~ X, lat = ~ Y, radius = 5),
+                   #,color = ~ ifelse(Category == 'BRIBERY', 'red', 'blue'),
+                   clusterOptions = markerClusterOptions()
