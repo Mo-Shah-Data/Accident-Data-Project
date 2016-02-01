@@ -5,8 +5,10 @@ require(devtools)
 install_github('rCharts', 'ramnathv')
 install.packages("leaflet")
 require(ggmap)
-
+library(leaflet)
+library(magrittr)
 library(shiny)
+
 runExample(example = "01_hello")
 
 x <- c("ggmap", "rgdal", "rgeos", "maptools", "dplyr", "tidyr", "tmap")
@@ -165,7 +167,7 @@ AllAccidentsClustered <- leaflet(na.omit(Accidents0513)) %>%
   addTiles() %>% 
   setView(-0.191170, 51.48910, zoom = 10) %>%
   addCircleMarkers(lng=Accidents0513$Longitude, lat=Accidents0513$Latitude,
-clusterOptions = markerClusterOptions())
+clusterOptions = markerClusterOptions(maxBytes = Inf))
 AllAccidentsClustered
 
 
@@ -174,6 +176,4 @@ mean(TopThousandRows$Longitude)
 mean(TopThousandRows$Latitude)
 is.na()
 !is.na(TopThousandRows$Longitude)
-library(leaflet)
-library(magrittr)
 
