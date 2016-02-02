@@ -177,3 +177,19 @@ mean(TopThousandRows$Latitude)
 is.na()
 !is.na(TopThousandRows$Longitude)
 
+# Both of the date columns below show up as factors and need to be changed to Date
+class(TopTenRows$Time)
+
+class(TopTenRows$Date)
+
+#Try the date conversion on 
+TopTenRows$Date
+
+as.Date(TopTenRows$Date$Date,"%d/%m/%Y")
+
+#If successful then move onto the next
+
+as.Date(Accidents0513$Date,"%d/%m/%Y")
+
+class(Accidents0513$Date)
+Accidents0513$Date
