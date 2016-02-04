@@ -1,13 +1,19 @@
 install.packages('shiny')
 install.packages('shinydashboard')
 install.packages('devtools')
+install.packages("sqldf")
 require(devtools)
 install_github('rCharts', 'ramnathv')
 install.packages("leaflet")
+install.packages("lubridate")
 require(ggmap)
+library(lubridate)
 library(leaflet)
 library(magrittr)
 library(shiny)
+library(sqldf)
+library(RSQLite)
+
 
 runExample(example = "01_hello")
 
@@ -193,3 +199,38 @@ as.Date(Accidents0513$Date,"%d/%m/%Y")
 
 class(Accidents0513$Date)
 Accidents0513$Date
+
+#Using sqldf()
+################################### Need to check why these dont work - below
+head(Accidents0513SQL)
+
+rm(Accidents2005)
+
+Accidents0513DF <- read.csv("~/Desktop/AccidentData/Accidents0513.csv")
+Accidents2005 <- read.csv.sql("~/Desktop/AccidentData/Accidents0513.csv",sql = "select Longitude, Latitude, Time, Date, Day_of_Week 
+                          from file where Date >= #31/12/2004# and Date < #01/01/2006# , header = TRUE, sep = ",", stringsAsFactors=FALSE,)
+#################################### Need to check why these dont work - above
+
+
+#Convert Date Data to Date type
+Accidents0513DF <- read.csv("~/Desktop/AccidentData/Accidents0513.csv",header = TRUE, sep =",", stringsAsFactors=FALSE)
+
+class(Accidents0513DF$Date)
+
+Accidents0513DF$Date <- as.Date(Accidents0513DF$Date)
+
+head(Accidents0513DF$Date)
+
+# now import into seprate years
+
+
+Accidents2005<-sqldf("select Longitude, Latitude, Time, Date, Day_of_Week 
+                              from Accidents0513DF where  as.Date(Date) < as.Date("2006-02-31")")
+
+Accidents0513 <- Accidents0513[,c("Longitude","Latitude","Time","Date","Day_of_Week")]
+
+head(Accidents2005)
+
+Accidents2006<-sqldf("select Longitude, Latitude, Time, Date,Day_of_Week 
+                              from Accidents0513DF where Date > '31-Dec-2004' and Date < '1-Jan-2006'")
+
