@@ -5,8 +5,6 @@ r_colors <- rgb(t(col2rgb(colors()) / 255))
 names(r_colors) <- colors()
 
 ui <- fluidPage(
-  titlePanel("Accidents"),
-  
   leafletOutput("mymap"),
   p(),
   actionButton("recalc", "New points")
@@ -23,8 +21,7 @@ server <- function(input, output, session) {
       addProviderTiles("Stamen.TonerLite",
                        options = providerTileOptions(noWrap = TRUE)
       ) %>%
-      addCircleMarkers(lng=TopThousandRows$Longitude, lat=TopThousandRows$Latitude, radius = 5,
-                       clusterOptions = markerClusterOptions())
+      addMarkers(data = points())
   })
 }
 

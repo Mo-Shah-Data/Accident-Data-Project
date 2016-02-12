@@ -2,7 +2,7 @@ library(shiny)
 library(leaflet)
 
 #To remove a file use the code below
-fn <- "global.r"
+fn <- "global.R"
 if (file.exists(fn)) file.remove(fn)
 
 r_colors <- rgb(t(col2rgb(colors()) / 255))

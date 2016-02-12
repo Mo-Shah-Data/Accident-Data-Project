@@ -1,25 +1,19 @@
 library(shiny)
 library(datasets)
 
-# Define server logic required to summarize and view the selected dataset
-shinyServer(function(input, output) {
+
+shinyServer (function(input, output, session) {
   
-  # Return the requested dataset
-  datasetInput <- reactive({
-    switch(input$dataset,
-           "rock" = rock,
-           "pressure" = pressure,
-           "cars" = cars)
-  })
+  points <- eventReactive(input$recalc, {
+    cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
+  }, ignoreNULL = FALSE)
   
-  # Generate a summary of the dataset
-  output$summary <- renderPrint({
-    dataset <- datasetInput()
-    summary(dataset)
+  output$mymap <- renderLeaflet({
+    leaflet() %>%
+      addProviderTiles("Stamen.TonerLite",
+                       options = providerTileOptions(noWrap = TRUE)
+      ) %>%
+      addCircleMarkers(lng=Accidents0513$Longitude, lat=Accidents0513$Latitude,
+                       clusterOptions = markerClusterOptions(maxBytes = Inf))
   })
-  
-  # Show the first "n" observations
-  output$view <- renderTable({
-    head(datasetInput(), n = input$obs)
-  })
-})
+}
