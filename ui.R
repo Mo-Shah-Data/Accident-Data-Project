@@ -1,25 +1,31 @@
 library(shiny)
+library(leaflet)
 
-# Define UI for dataset viewer application
-shinyUI(pageWithSidebar(
+r_colors <- rgb(t(col2rgb(colors()) / 255))
+names(r_colors) <- colors()
+
+ui <- fluidPage(
+  titlePanel("Accidents"),
   
-  # Application title
-  headerPanel("Shiny Text"),
+  leafletOutput("mymap"),
+  p(),
+  actionButton("recalc", "New points")
+)
+
+server <- function(input, output, session) {
   
-  # Sidebar with controls to select a dataset and specify the number
-  # of observations to view
-  sidebarPanel(
-    selectInput("dataset", "Choose a dataset:", 
-                choices = c("rock", "pressure", "cars")),
-    
-    numericInput("obs", "Number of observations to view:", 10)
-  ),
+  points <- eventReactive(input$recalc, {
+    cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
+  }, ignoreNULL = FALSE)
   
-  # Show a summary of the dataset and an HTML table with the requested
-  # number of observations
-  mainPanel(
-    verbatimTextOutput("summary"),
-    
-    tableOutput("view")
-  )
-))
+  output$mymap <- renderLeaflet({
+    leaflet() %>%
+      addProviderTiles("Stamen.TonerLite",
+                       options = providerTileOptions(noWrap = TRUE)
+      ) %>%
+      addCircleMarkers(lng=TopThousandRows$Longitude, lat=TopThousandRows$Latitude, radius = 5,
+                       clusterOptions = markerClusterOptions())
+  })
+}
+
+shinyApp(ui, server)
