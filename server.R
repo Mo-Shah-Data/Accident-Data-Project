@@ -2,7 +2,7 @@ library(shiny)
 library(ggplot2)
 library(sqldf)
 
-server <- function(input, output, session) {
+shinyServer(function(input, output, session) {
   
   points <- eventReactive(input$recalc, {
     cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
@@ -13,7 +13,9 @@ server <- function(input, output, session) {
       addProviderTiles("Stamen.TonerLite",
                        options = providerTileOptions(noWrap = TRUE)
       ) %>%
-      addMarkers(data = points())
+    
+    addCircleMarkers(lng=TopThousandRows$Longitude, lat=TopThousandRows$Latitude, radius = 5,
+                     clusterOptions = markerClusterOptions())
   })
-}
+})
 
