@@ -10,7 +10,7 @@ shinyServer(function(input, output, session) {
   
   output$mymap <- renderLeaflet({
     leaflet() %>%
-      addProviderTiles("Stamen.TonerLite",
+      addProviderTiles("MapQuestOpen.OSM",
                        options = providerTileOptions(noWrap = TRUE)
       ) %>%
     
